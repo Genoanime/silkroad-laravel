@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateVoteforsilkVotesTable extends Migration
 {
@@ -17,8 +18,8 @@ class CreateVoteforsilkVotesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('voteforsilks_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('voted_at')->default(\Carbon\Carbon::now());
-            $table->timestamp('vote_again_at');
+            $table->timestamp('voted_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('vote_again_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
 
             $table->foreign('user_id')

@@ -46,6 +46,11 @@ Route::get('/news-archive', 'Frontend\NewsController@archive')->name('news-archi
 
 // Other
 Route::get('/downloads', 'Frontend\IndexController@downloads')->name('downloads-index');
+
+
+Route::get('/magicpop', 'Frontend\IndexController@get_magic_pop_items')->name('magic-pop');
+
+
 Route::get('/rules', 'Frontend\IndexController@rules')->name('rules-index');
 Route::get('/worldmap', 'Frontend\IndexController@worldmapIndex')->name('worldmap');
 

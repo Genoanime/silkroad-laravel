@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Download;
 use App\Http\Controllers\Controller;
 use App\Http\Model\SRO\Log\OnlineOfflineLog;
+use App\Http\Model\SRO\Shard\RefGachaItemSet;
 use App\News;
 use App\Pages;
 use App\Rules;
@@ -22,6 +23,39 @@ use Response;
 
 class IndexController extends Controller
 {
+
+
+    public function get_magic_pop_items() {
+        $results = RefGachaItemSet::with('refObjCommon')
+                    ->get()
+                    ->where('Service', '=', 1)
+                    ->map(function($item) {
+                        $itemArray = $item->toArray();
+                        $refObjCommonArray = $item->refObjCommon ? $item->refObjCommon->toArray() : [];
+                        if (isset($refObjCommonArray['AssocFileIcon128'])) {
+                            $refObjCommonArray['AssocFileIcon128'] = 'image/sro/' . str_replace('.ddj', '.jpg', $refObjCommonArray['AssocFileIcon128']);
+                        }
+                        return $refObjCommonArray;
+                    });
+    
+        return view('theme::frontend.other.magicpop', [
+            'magicpop_items' => $results
+        ]);
+    }
+    
+    public function get_image_for_magicpop_item($item_name){
+        $results = RefGachaItemSet::with('refObjCommon')
+                ->get()
+                ->map(function($item) {
+                    $itemArray = $item->toArray();
+                    $refObjCommonArray = $item->refObjCommon ? $item->refObjCommon->toArray() : [];
+                    return $refObjCommonArray;
+                });
+
+            return $results;
+    }
+
+
     /**
      * @return Factory|View
      */

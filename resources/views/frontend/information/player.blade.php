@@ -13,7 +13,7 @@
                             @else
                                 @auth
                                     @if($player->getAccountUser->getTbUser->JID === Auth::user()->jid)
-                                        @include('theme::frontend.information.information.player.own')
+                                        {{-- @include('theme::frontend.information.information.player.own') --}}
                                     @else
                                         @include('theme::frontend.information.information.player.guest')
                                     @endif
